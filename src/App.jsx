@@ -46,7 +46,7 @@ const pizzaData = [
   },
 ];
 
-function App() {
+function Pizza() {
   return (
     <div>
       <h1> Pizza Spinaci</h1>
@@ -54,6 +54,35 @@ function App() {
       <img src="assets/pizzas/focaccia.jpg" alt="abc" />
     </div>
   );
+}
+function App() {
+  return (
+    <>
+      <Header />
+      <Menu />
+      <Footer />
+    </>
+  );
+}
+function Header() {
+  return <h1>Fast React Pizza.Co</h1>;
+}
+function Menu() {
+  return (
+    <>
+      <h2>Our Menu</h2>
+      <Pizza />
+    </>
+  );
+}
+function Footer() {
+  const hour = new Date().getHours();
+  console.log(hour);
+  const opeHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= opeHour && hour <= closeHour;
+  console.log(isOpen); //true
+  return <footer>{new Date().toLocaleDateString()} were currently open</footer>;
 }
 
 export default App;
