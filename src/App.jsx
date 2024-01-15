@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 let pizzaData = [
@@ -66,30 +66,31 @@ function Menu() {
   const numPizzas = pizzaData.length
   return (
     <main className="menu">
-      <h2>Our Menu</h2>
+      <h2>Our Menu</h2>    
+      <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious. </p>
       <ul className="pizzas">
         {numPizzas>0 ?pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        )):<p> we are still working on our menu</p>}
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          )):<p> we are still working on our menu</p>}
       </ul>
     </main>
   );
 }
-function Pizza(props) {
+function Pizza({pizzaObj}) {
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
-      <div>
-        <h3> {props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+    <li className={`pizza ${pizzaObj.soldOut?"sold-out":""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div >
+        <h3> {pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT":pizzaObj.price}</span>
       </div>
     </li>
   );
 }
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 12;
+  const openHour = 10;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   if(!isOpen){
@@ -98,13 +99,16 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen && (
-        <div className='order'>
-      <p>we are open until {closeHour}:00. Come visit us or order online.</p>
-      <button className='btn'>Order</button>
-      </div>)}
+       <Order closeHour={closeHour}/> )}
 
     </footer>
   );
+}
+function Order(props){
+  return(<div className='order'>
+  <p>we are open until {props.closeHour}:00. Come visit us or order online.</p>
+  <button className='btn'>Order</button>
+  </div>)
 }
 
 export default App;
